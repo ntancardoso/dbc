@@ -1,0 +1,193 @@
+# GoReleaser configuration for dbc and all drivers
+version: 2
+
+before:
+  hooks:
+    - go mod tidy
+    - go test ./...
+
+# Build core dbc binary
+builds:
+  # Core binary
+  - id: dbc
+    main: ./cmd/dbc
+    binary: dbc
+    goos:
+      - linux
+      - darwin
+      - windows
+    goarch:
+      - amd64
+      - arm64
+    env:
+      - CGO_ENABLED=0
+    ldflags:
+      - -s -w
+      - -X github.com/ntancardoso/dbc/internal/core.version={{.Version}}
+
+  # MySQL driver (no CGO required)
+  - id: mysql-driver
+    main: ./drivers/mysql
+    binary: dbc-driver-mysql
+    goos:
+      - linux
+      - darwin
+      - windows
+    goarch:
+      - amd64
+      - arm64
+    env:
+      - CGO_ENABLED=0
+    ldflags:
+      - -s -w
+
+  # PostgreSQL driver (no CGO required)
+  - id: postgres-driver
+    main: ./drivers/postgres
+    binary: dbc-driver-postgres
+    goos:
+      - linux
+      - darwin
+      - windows
+    goarch:
+      - amd64
+      - arm64
+    env:
+      - CGO_ENABLED=0
+    ldflags:
+      - -s -w
+
+  # SQL Server driver (no CGO required)
+  - id: sqlserver-driver
+    main: ./drivers/sqlserver
+    binary: dbc-driver-sqlserver
+    goos:
+      - linux
+      - darwin
+      - windows
+    goarch:
+      - amd64
+      - arm64
+    env:
+      - CGO_ENABLED=0
+    ldflags:
+      - -s -w
+
+  # Oracle driver (no CGO required)
+  - id: oracle-driver
+    main: ./drivers/oracle
+    binary: dbc-driver-oracle
+    goos:
+      - linux
+      - darwin
+      - windows
+    goarch:
+      - amd64
+      - arm64
+    env:
+      - CGO_ENABLED=0
+    ldflags:
+      - -s -w
+
+  # SQLite driver for Linux (requires CGO)
+  - id: sqlite-driver-linux
+    main: ./drivers/sqlite
+    binary: dbc-driver-sqlite
+    goos:
+      - linux
+    goarch:
+      - amd64
+      - arm64
+    env:
+      - CGO_ENABLED=1
+    ldflags:
+      - -s -w
+
+  # SQLite driver for macOS (requires CGO)
+  - id: sqlite-driver-darwin
+    main: ./drivers/sqlite
+    binary: dbc-driver-sqlite
+    goos:
+      - darwin
+    goarch:
+      - amd64
+      - arm64
+    env:
+      - CGO_ENABLED=1
+    ldflags:
+      - -s -w
+
+  # SQLite driver for Windows (requires CGO and mingw)
+  - id: sqlite-driver-windows
+    main: ./drivers/sqlite
+    binary: dbc-driver-sqlite
+    goos:
+      - windows
+    goarch:
+      - amd64
+    env:
+      - CGO_ENABLED=1
+      - CC=x86_64-w64-mingw32-gcc
+    ldflags:
+      - -s -w
+
+archives:
+  - id: dbc-archive
+    format: tar.gz
+    name_template: >-
+      {{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}
+    format_overrides:
+      - goos: windows
+        format: zip
+    files:
+      - README.md
+      - LICENSE
+      - .env.example
+
+checksum:
+  name_template: 'checksums.txt'
+  algorithm: sha256
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'
+      - '^chore:'
+      - '^ci:'
+
+release:
+  github:
+    owner: ntancardoso
+    name: dbc
+  draft: false
+  prerelease: auto
+  name_template: "{{.ProjectName}} v{{.Version}}"
+  header: |
+    ## Database Comparison Tool v{{.Version}}
+
+    A powerful database schema comparison tool with plugin-based driver architecture.
+
+    ### Features
+    - Compare database schemas across snapshots
+    - Support for MySQL, PostgreSQL, SQLite, SQL Server, and Oracle
+    - Flexible snapshot naming (no hardcoded before/after)
+    - Dynamic driver installation
+    - Cross-platform support
+
+    ### Installation
+
+    #### Download Core Binary
+
+    ```bash
+    # Linux/macOS
+    tar xzf dbc_{{.Version}}_linux_amd64.tar.gz
+    chmod +x dbc
+    sudo mv dbc /usr/local/bin/
+
+    # Windows (extract ZIP)
+    # Move dbc.exe to a folder in your PATH
+    ```
+
+    ### Changes
