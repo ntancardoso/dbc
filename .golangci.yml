@@ -25,6 +25,14 @@ linters:
       enable-all: true
     misspell:
       locale: US
+    revive:
+      rules:
+        - name: exported
+          disabled: true
+        - name: package-comments
+          disabled: true
+        - name: unused-parameter
+          disabled: false
 
 formatters:
   settings:

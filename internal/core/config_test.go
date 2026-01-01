@@ -43,17 +43,17 @@ func TestDefaultConfig(t *testing.T) {
 
 func TestLoadFromEnv(t *testing.T) {
 	// Set environment variables
-	os.Setenv("DB_TYPE", "postgres")
-	os.Setenv("DB_HOST", "db.example.com")
-	os.Setenv("DB_PORT", "5432")
-	os.Setenv("DB_USER", "testuser")
-	os.Setenv("DB_PASSWORD", "testpass")
-	os.Setenv("DB_NAME", "testdb")
-	os.Setenv("DBC_OUTPUT_DIR", "/tmp/snapshots")
-	os.Setenv("DBC_WORKERS", "20")
-	os.Setenv("DBC_VERIFY_DATA", "true")
-	os.Setenv("DBC_VERIFY_COUNTS", "false")
-	os.Setenv("DBC_AUTO_INSTALL", "false")
+	t.Setenv("DB_TYPE", "postgres")
+	t.Setenv("DB_HOST", "db.example.com")
+	t.Setenv("DB_PORT", "5432")
+	t.Setenv("DB_USER", "testuser")
+	t.Setenv("DB_PASSWORD", "testpass")
+	t.Setenv("DB_NAME", "testdb")
+	t.Setenv("DBC_OUTPUT_DIR", "/tmp/snapshots")
+	t.Setenv("DBC_WORKERS", "20")
+	t.Setenv("DBC_VERIFY_DATA", "true")
+	t.Setenv("DBC_VERIFY_COUNTS", "false")
+	t.Setenv("DBC_AUTO_INSTALL", "false")
 
 	defer func() {
 		// Clean up
