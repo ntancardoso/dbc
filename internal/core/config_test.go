@@ -1,7 +1,6 @@
 package core
 
 import (
-	"os"
 	"testing"
 )
 
@@ -54,21 +53,6 @@ func TestLoadFromEnv(t *testing.T) {
 	t.Setenv("DBC_VERIFY_DATA", "true")
 	t.Setenv("DBC_VERIFY_COUNTS", "false")
 	t.Setenv("DBC_AUTO_INSTALL", "false")
-
-	defer func() {
-		// Clean up
-		os.Unsetenv("DB_TYPE")
-		os.Unsetenv("DB_HOST")
-		os.Unsetenv("DB_PORT")
-		os.Unsetenv("DB_USER")
-		os.Unsetenv("DB_PASSWORD")
-		os.Unsetenv("DB_NAME")
-		os.Unsetenv("DBC_OUTPUT_DIR")
-		os.Unsetenv("DBC_WORKERS")
-		os.Unsetenv("DBC_VERIFY_DATA")
-		os.Unsetenv("DBC_VERIFY_COUNTS")
-		os.Unsetenv("DBC_AUTO_INSTALL")
-	}()
 
 	cfg := DefaultConfig()
 	cfg.LoadFromEnv()
