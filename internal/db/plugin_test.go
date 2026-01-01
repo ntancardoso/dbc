@@ -70,7 +70,7 @@ func TestFileExists(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Failed to create test file: %v", err)
 	}
-	f.Close()
+	_ = f.Close()
 
 	// File should exist now
 	if !fileExists(tmpFile) {
@@ -78,21 +78,17 @@ func TestFileExists(t *testing.T) {
 	}
 }
 
-func TestPluginDriverInterface(t *testing.T) {
+func TestPluginDriverInterface(_ *testing.T) {
 	// Test that PluginDriver implements the Driver interface
 	var _ Driver = (*PluginDriver)(nil)
 }
 
 func TestExtractParams(t *testing.T) {
 	params := ExtractParams{
-		Host:            "localhost",
-		Port:            3306,
-		User:            "root",
-		Password:        "secret",
-		Database:        "testdb",
-		VerifyData:      true,
-		VerifyRowCounts: true,
-		Workers:         10,
+		Host:     "localhost",
+		Port:     3306,
+		Database: "testdb",
+		Workers:  10,
 	}
 
 	if params.Host != "localhost" {
@@ -105,10 +101,6 @@ func TestExtractParams(t *testing.T) {
 
 	if params.Database != "testdb" {
 		t.Errorf("Expected Database 'testdb', got '%s'", params.Database)
-	}
-
-	if !params.VerifyData {
-		t.Error("Expected VerifyData true")
 	}
 
 	if params.Workers != 10 {

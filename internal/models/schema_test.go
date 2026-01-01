@@ -2,17 +2,13 @@ package models
 
 import (
 	"testing"
-	"time"
 )
 
 func TestSchemaSnapshot(t *testing.T) {
 	snapshot := SchemaSnapshot{
-		Key:       "test_snapshot",
-		Timestamp: time.Now(),
-		Database:  "testdb",
-		Host:      "localhost",
-		DBType:    "mysql",
-		Tables:    []Table{},
+		Key:      "test_snapshot",
+		Database: "testdb",
+		DBType:   "mysql",
 		Metadata: Metadata{
 			Version:         "1.0.0",
 			VerifyData:      false,
@@ -37,9 +33,7 @@ func TestSchemaSnapshot(t *testing.T) {
 
 func TestTable(t *testing.T) {
 	table := Table{
-		Name:     "users",
-		Engine:   "InnoDB",
-		RowCount: 1000,
+		Name:    "users",
 		Columns: []Column{
 			{
 				Name:       "id",
@@ -100,12 +94,7 @@ func TestColumn(t *testing.T) {
 	defaultValue := "CURRENT_TIMESTAMP"
 	col := Column{
 		Name:         "created_at",
-		Position:     3,
-		DataType:     "timestamp",
-		ColumnType:   "timestamp",
-		IsNullable:   false,
 		DefaultValue: &defaultValue,
-		Extra:        "on update CURRENT_TIMESTAMP",
 	}
 
 	if col.Name != "created_at" {
@@ -123,12 +112,9 @@ func TestColumn(t *testing.T) {
 
 func TestForeignKey(t *testing.T) {
 	fk := ForeignKey{
-		Name:             "fk_user_id",
-		Column:           "user_id",
-		ReferencedTable:  "users",
-		ReferencedColumn: "id",
-		OnDelete:         "CASCADE",
-		OnUpdate:         "RESTRICT",
+		Name:            "fk_user_id",
+		ReferencedTable: "users",
+		OnDelete:        "CASCADE",
 	}
 
 	if fk.Name != "fk_user_id" {
@@ -146,13 +132,8 @@ func TestForeignKey(t *testing.T) {
 
 func TestChangeSet(t *testing.T) {
 	changeSet := ChangeSet{
-		Snapshot1Key: "baseline",
-		Snapshot2Key: "v1.2.3",
 		TablesAdded: []Table{
 			{Name: "new_table"},
-		},
-		TablesRemoved: []Table{
-			{Name: "old_table"},
 		},
 		Summary: ChangeSummary{
 			TablesAdded:    1,

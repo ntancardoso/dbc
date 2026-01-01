@@ -52,8 +52,8 @@ func (pd *PluginDriver) initialize() error {
 	}
 
 	var versionData GetVersionResponse
-	if err := json.Unmarshal(versionResp.Data, &versionData); err != nil {
-		return fmt.Errorf("failed to parse version response: %w", err)
+	if unmarshalErr := json.Unmarshal(versionResp.Data, &versionData); unmarshalErr != nil {
+		return fmt.Errorf("failed to parse version response: %w", unmarshalErr)
 	}
 	pd.version = versionData.Version
 

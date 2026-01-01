@@ -57,10 +57,8 @@ func TestGetDriverExecutableNameWindows(t *testing.T) {
 				if result != expected {
 					t.Errorf("Expected '%s', got '%s'", expected, result)
 				}
-			} else {
-				if result != tt.wantSuffix {
-					t.Errorf("Expected '%s', got '%s'", tt.wantSuffix, result)
-				}
+			} else if result != tt.wantSuffix {
+				t.Errorf("Expected '%s', got '%s'", tt.wantSuffix, result)
 			}
 		})
 	}
@@ -85,7 +83,7 @@ func TestFetchRegistry(t *testing.T) {
 	}
 
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
-		json.NewEncoder(w).Encode(registry)
+		_ = json.NewEncoder(w).Encode(registry)
 	}))
 	defer server.Close()
 
@@ -138,7 +136,7 @@ func TestIsDriverInstalled(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Failed to create driver executable: %v", err)
 	}
-	f.Close()
+	_ = f.Close()
 
 	// Driver should be installed now
 	if !rm.IsDriverInstalled("mysql") {
@@ -165,8 +163,8 @@ func TestListInstalledDrivers(t *testing.T) {
 
 	// Install a driver
 	driverDir := filepath.Join(tmpDir, "mysql")
-	if err := os.MkdirAll(driverDir, 0755); err != nil {
-		t.Fatalf("Failed to create driver directory: %v", err)
+	if mkdirErr := os.MkdirAll(driverDir, 0755); mkdirErr != nil {
+		t.Fatalf("Failed to create driver directory: %v", mkdirErr)
 	}
 
 	metadata := DriverMetadata{
@@ -177,8 +175,8 @@ func TestListInstalledDrivers(t *testing.T) {
 	}
 
 	metadataPath := filepath.Join(driverDir, "metadata.json")
-	if err := rm.saveMetadata(metadataPath, metadata); err != nil {
-		t.Fatalf("Failed to save metadata: %v", err)
+	if saveErr := rm.saveMetadata(metadataPath, metadata); saveErr != nil {
+		t.Fatalf("Failed to save metadata: %v", saveErr)
 	}
 
 	// List drivers again

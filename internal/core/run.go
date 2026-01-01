@@ -59,7 +59,9 @@ func runCapture(args []string) error {
 	verifyRowCounts := fs.Bool("verify-counts", true, "Get exact row counts")
 	workers := fs.Int("workers", 10, "Number of parallel workers")
 
-	fs.Parse(args)
+	if err := fs.Parse(args); err != nil {
+		return fmt.Errorf("failed to parse flags: %w", err)
+	}
 
 	cfg := DefaultConfig()
 	cfg.LoadFromEnv()
@@ -163,7 +165,9 @@ func runCompare(args []string) error {
 	fs := flag.NewFlagSet("compare", flag.ExitOnError)
 	outputDir := fs.String("output", "", "Snapshot directory")
 	format := fs.String("format", "text", "Output format (text, json, html)")
-	fs.Parse(flagArgs)
+	if err := fs.Parse(flagArgs); err != nil {
+		return fmt.Errorf("failed to parse flags: %w", err)
+	}
 
 	if len(positionalArgs) < 2 {
 		return fmt.Errorf("compare requires two snapshot keys")
@@ -220,7 +224,9 @@ func runCompare(args []string) error {
 func runList(args []string) error {
 	fs := flag.NewFlagSet("list", flag.ExitOnError)
 	outputDir := fs.String("output", "", "Snapshot directory")
-	fs.Parse(args)
+	if err := fs.Parse(args); err != nil {
+		return fmt.Errorf("failed to parse flags: %w", err)
+	}
 
 	cfg := DefaultConfig()
 	cfg.LoadFromEnv()
@@ -259,7 +265,9 @@ func runList(args []string) error {
 func runShow(args []string) error {
 	fs := flag.NewFlagSet("show", flag.ExitOnError)
 	outputDir := fs.String("output", "", "Snapshot directory")
-	fs.Parse(args)
+	if err := fs.Parse(args); err != nil {
+		return fmt.Errorf("failed to parse flags: %w", err)
+	}
 
 	if fs.NArg() < 1 {
 		return fmt.Errorf("show requires a snapshot key")
@@ -331,7 +339,9 @@ func runDriver(args []string) error {
 func runDriverList(regMgr *db.RegistryManager, args []string) error {
 	fs := flag.NewFlagSet("driver list", flag.ExitOnError)
 	installed := fs.Bool("installed", false, "List only installed drivers")
-	fs.Parse(args)
+	if err := fs.Parse(args); err != nil {
+		return fmt.Errorf("failed to parse flags: %w", err)
+	}
 
 	if *installed {
 		drivers, err := regMgr.ListInstalledDrivers()
@@ -391,7 +401,7 @@ func runDriverUninstall(regMgr *db.RegistryManager, args []string) error {
 	return regMgr.UninstallDriver(driverName)
 }
 
-func runDriverInfo(regMgr *db.RegistryManager, args []string) error {
+func runDriverInfo(_ *db.RegistryManager, args []string) error {
 	if len(args) < 1 {
 		return fmt.Errorf("info requires a driver name")
 	}
@@ -404,7 +414,7 @@ func runDriverInfo(regMgr *db.RegistryManager, args []string) error {
 	return nil
 }
 
-func runDriverUpdate(regMgr *db.RegistryManager, args []string) error {
+func runDriverUpdate(_ *db.RegistryManager, args []string) error {
 	if len(args) < 1 {
 		return fmt.Errorf("update requires a driver name")
 	}

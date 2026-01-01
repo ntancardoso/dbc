@@ -62,7 +62,9 @@ func (rm *RegistryManager) FetchRegistry() (*DriverRegistry, error) {
 	if err != nil {
 		return nil, fmt.Errorf("failed to fetch registry: %w", err)
 	}
-	defer resp.Body.Close()
+	defer func() {
+		_ = resp.Body.Close()
+	}()
 
 	if resp.StatusCode != http.StatusOK {
 		return nil, fmt.Errorf("registry fetch failed with status: %d", resp.StatusCode)
@@ -108,7 +110,7 @@ func (rm *RegistryManager) InstallDriver(driverName string) error {
 
 	fmt.Println("Verifying checksum...")
 	if err := rm.verifyChecksum(driverPath, platformInfo.Checksum); err != nil {
-		os.Remove(driverPath) // Clean up on verification failure
+		_ = os.Remove(driverPath) // Clean up on verification failure
 		return fmt.Errorf("checksum verification failed: %w", err)
 	}
 
@@ -204,7 +206,9 @@ func (rm *RegistryManager) downloadFile(url, filepath string) error {
 	if err != nil {
 		return err
 	}
-	defer resp.Body.Close()
+	defer func() {
+		_ = resp.Body.Close()
+	}()
 
 	if resp.StatusCode != http.StatusOK {
 		return fmt.Errorf("download failed with status: %d", resp.StatusCode)
@@ -214,7 +218,9 @@ func (rm *RegistryManager) downloadFile(url, filepath string) error {
 	if err != nil {
 		return err
 	}
-	defer out.Close()
+	defer func() {
+		_ = out.Close()
+	}()
 
 	_, err = io.Copy(out, resp.Body)
 	return err
@@ -226,7 +232,9 @@ func (rm *RegistryManager) verifyChecksum(filepath, expectedChecksum string) err
 	if err != nil {
 		return err
 	}
-	defer file.Close()
+	defer func() {
+		_ = file.Close()
+	}()
 
 	hash := sha256.New()
 	if _, err := io.Copy(hash, file); err != nil {
