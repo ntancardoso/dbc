@@ -32,9 +32,9 @@ formatters:
     gofmt:
       simplify: true
     goimports:
-      local-prefixes: github.com/ntancardoso/dbc
+      local-prefixes:
+        - github.com/ntancardoso/dbc
 
 issues:
-  exclude-use-default: false
   max-issues-per-linter: 0
   max-same-issues: 0
