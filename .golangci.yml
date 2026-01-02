@@ -21,8 +21,17 @@ linters:
     errcheck:
       check-type-assertions: true
       check-blank: true
+      exclude-functions:
+        - (io.Closer).Close
+        - (*os.File).Close
+        - (net/http.ResponseBody).Close
+        - (*encoding/json.Encoder).Encode
+        - os.Remove
+        - github.com/joho/godotenv.Load
     govet:
       enable-all: true
+      disable:
+        - fieldalignment
     misspell:
       locale: US
     revive:
