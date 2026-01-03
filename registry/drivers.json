@@ -1,0 +1,129 @@
+{
+  "drivers": {
+    "mysql": {
+      "name": "mysql",
+      "version": "1.0.0",
+      "description": "MySQL/MariaDB driver",
+      "platforms": {
+        "windows-amd64": {
+          "url": "https://github.com/ntancardoso/dbc/releases/download/v0.1.0/dbc-driver-mysql-windows-amd64.exe"
+        },
+        "windows-arm64": {
+          "url": "https://github.com/ntancardoso/dbc/releases/download/v0.1.0/dbc-driver-mysql-windows-arm64.exe"
+        },
+        "linux-amd64": {
+          "url": "https://github.com/ntancardoso/dbc/releases/download/v0.1.0/dbc-driver-mysql-linux-amd64"
+        },
+        "linux-arm64": {
+          "url": "https://github.com/ntancardoso/dbc/releases/download/v0.1.0/dbc-driver-mysql-linux-arm64"
+        },
+        "darwin-amd64": {
+          "url": "https://github.com/ntancardoso/dbc/releases/download/v0.1.0/dbc-driver-mysql-darwin-amd64"
+        },
+        "darwin-arm64": {
+          "url": "https://github.com/ntancardoso/dbc/releases/download/v0.1.0/dbc-driver-mysql-darwin-arm64"
+        }
+      }
+    },
+    "postgres": {
+      "name": "postgres",
+      "version": "1.0.0",
+      "description": "PostgreSQL driver",
+      "platforms": {
+        "windows-amd64": {
+          "url": "https://github.com/ntancardoso/dbc/releases/download/v0.1.0/dbc-driver-postgres-windows-amd64.exe"
+        },
+        "windows-arm64": {
+          "url": "https://github.com/ntancardoso/dbc/releases/download/v0.1.0/dbc-driver-postgres-windows-arm64.exe"
+        },
+        "linux-amd64": {
+          "url": "https://github.com/ntancardoso/dbc/releases/download/v0.1.0/dbc-driver-postgres-linux-amd64"
+        },
+        "linux-arm64": {
+          "url": "https://github.com/ntancardoso/dbc/releases/download/v0.1.0/dbc-driver-postgres-linux-arm64"
+        },
+        "darwin-amd64": {
+          "url": "https://github.com/ntancardoso/dbc/releases/download/v0.1.0/dbc-driver-postgres-darwin-amd64"
+        },
+        "darwin-arm64": {
+          "url": "https://github.com/ntancardoso/dbc/releases/download/v0.1.0/dbc-driver-postgres-darwin-arm64"
+        }
+      }
+    },
+    "sqlserver": {
+      "name": "sqlserver",
+      "version": "1.0.0",
+      "description": "Microsoft SQL Server driver",
+      "platforms": {
+        "windows-amd64": {
+          "url": "https://github.com/ntancardoso/dbc/releases/download/v0.1.0/dbc-driver-sqlserver-windows-amd64.exe"
+        },
+        "windows-arm64": {
+          "url": "https://github.com/ntancardoso/dbc/releases/download/v0.1.0/dbc-driver-sqlserver-windows-arm64.exe"
+        },
+        "linux-amd64": {
+          "url": "https://github.com/ntancardoso/dbc/releases/download/v0.1.0/dbc-driver-sqlserver-linux-amd64"
+        },
+        "linux-arm64": {
+          "url": "https://github.com/ntancardoso/dbc/releases/download/v0.1.0/dbc-driver-sqlserver-linux-arm64"
+        },
+        "darwin-amd64": {
+          "url": "https://github.com/ntancardoso/dbc/releases/download/v0.1.0/dbc-driver-sqlserver-darwin-amd64"
+        },
+        "darwin-arm64": {
+          "url": "https://github.com/ntancardoso/dbc/releases/download/v0.1.0/dbc-driver-sqlserver-darwin-arm64"
+        }
+      }
+    },
+    "oracle": {
+      "name": "oracle",
+      "version": "1.0.0",
+      "description": "Oracle Database driver",
+      "platforms": {
+        "windows-amd64": {
+          "url": "https://github.com/ntancardoso/dbc/releases/download/v0.1.0/dbc-driver-oracle-windows-amd64.exe"
+        },
+        "windows-arm64": {
+          "url": "https://github.com/ntancardoso/dbc/releases/download/v0.1.0/dbc-driver-oracle-windows-arm64.exe"
+        },
+        "linux-amd64": {
+          "url": "https://github.com/ntancardoso/dbc/releases/download/v0.1.0/dbc-driver-oracle-linux-amd64"
+        },
+        "linux-arm64": {
+          "url": "https://github.com/ntancardoso/dbc/releases/download/v0.1.0/dbc-driver-oracle-linux-arm64"
+        },
+        "darwin-amd64": {
+          "url": "https://github.com/ntancardoso/dbc/releases/download/v0.1.0/dbc-driver-oracle-darwin-amd64"
+        },
+        "darwin-arm64": {
+          "url": "https://github.com/ntancardoso/dbc/releases/download/v0.1.0/dbc-driver-oracle-darwin-arm64"
+        }
+      }
+    },
+    "sqlite": {
+      "name": "sqlite",
+      "version": "1.0.0",
+      "description": "SQLite driver",
+      "platforms": {
+        "windows-amd64": {
+          "url": "https://github.com/ntancardoso/dbc/releases/download/v0.1.0/dbc-driver-sqlite-windows-amd64.exe"
+        },
+        "windows-arm64": {
+          "url": "https://github.com/ntancardoso/dbc/releases/download/v0.1.0/dbc-driver-sqlite-windows-arm64.exe"
+        },
+        "linux-amd64": {
+          "url": "https://github.com/ntancardoso/dbc/releases/download/v0.1.0/dbc-driver-sqlite-linux-amd64"
+        },
+        "linux-arm64": {
+          "url": "https://github.com/ntancardoso/dbc/releases/download/v0.1.0/dbc-driver-sqlite-linux-arm64"
+        },
+        "darwin-amd64": {
+          "url": "https://github.com/ntancardoso/dbc/releases/download/v0.1.0/dbc-driver-sqlite-darwin-amd64"
+        },
+        "darwin-arm64": {
+          "url": "https://github.com/ntancardoso/dbc/releases/download/v0.1.0/dbc-driver-sqlite-darwin-arm64"
+        }
+      }
+    }
+  }
+}

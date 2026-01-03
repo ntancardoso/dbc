@@ -1,0 +1,205 @@
+# GoReleaser configuration for dbc and all drivers
+version: 2
+
+before:
+  hooks:
+    - go mod tidy
+    - go test ./...
+
+# Build core dbc binary
+builds:
+  # Core binary
+  - id: dbc
+    main: ./cmd/dbc
+    binary: dbc
+    goos:
+      - linux
+      - darwin
+      - windows
+    goarch:
+      - amd64
+      - arm64
+    env:
+      - CGO_ENABLED=0
+    ldflags:
+      - -s -w
+      - -X github.com/ntancardoso/dbc/internal/core.version={{.Version}}
+
+  # MySQL driver (no CGO required)
+  - id: mysql-driver
+    dir: ./drivers/mysql
+    main: .
+    binary: dbc-driver-mysql
+    goos:
+      - linux
+      - darwin
+      - windows
+    goarch:
+      - amd64
+      - arm64
+    env:
+      - CGO_ENABLED=0
+    ldflags:
+      - -s -w
+
+  # PostgreSQL driver (no CGO required)
+  - id: postgres-driver
+    dir: ./drivers/postgres
+    main: .
+    binary: dbc-driver-postgres
+    goos:
+      - linux
+      - darwin
+      - windows
+    goarch:
+      - amd64
+      - arm64
+    env:
+      - CGO_ENABLED=0
+    ldflags:
+      - -s -w
+
+  # SQL Server driver (no CGO required)
+  - id: sqlserver-driver
+    dir: ./drivers/sqlserver
+    main: .
+    binary: dbc-driver-sqlserver
+    goos:
+      - linux
+      - darwin
+      - windows
+    goarch:
+      - amd64
+      - arm64
+    env:
+      - CGO_ENABLED=0
+    ldflags:
+      - -s -w
+
+  # Oracle driver (no CGO required)
+  - id: oracle-driver
+    dir: ./drivers/oracle
+    main: .
+    binary: dbc-driver-oracle
+    goos:
+      - linux
+      - darwin
+      - windows
+    goarch:
+      - amd64
+      - arm64
+    env:
+      - CGO_ENABLED=0
+    ldflags:
+      - -s -w
+
+  # SQLite driver (pure Go, no CGO required)
+  - id: sqlite-driver
+    dir: ./drivers/sqlite
+    main: .
+    binary: dbc-driver-sqlite
+    goos:
+      - linux
+      - darwin
+      - windows
+    goarch:
+      - amd64
+      - arm64
+    env:
+      - CGO_ENABLED=0
+    ldflags:
+      - -s -w
+
+archives:
+  - id: dbc-archive
+    builds:
+      - dbc
+    format: tar.gz
+    name_template: >-
+      {{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}
+    format_overrides:
+      - goos: windows
+        format: zip
+    files:
+      - README.md
+      - LICENSE
+      - .env.example
+
+  # Driver binaries - published as raw executables for direct download
+  - id: mysql-driver-archive
+    builds:
+      - mysql-driver
+    format: binary
+    name_template: "dbc-driver-mysql-{{ .Os }}-{{ .Arch }}"
+
+  - id: postgres-driver-archive
+    builds:
+      - postgres-driver
+    format: binary
+    name_template: "dbc-driver-postgres-{{ .Os }}-{{ .Arch }}"
+
+  - id: sqlserver-driver-archive
+    builds:
+      - sqlserver-driver
+    format: binary
+    name_template: "dbc-driver-sqlserver-{{ .Os }}-{{ .Arch }}"
+
+  - id: oracle-driver-archive
+    builds:
+      - oracle-driver
+    format: binary
+    name_template: "dbc-driver-oracle-{{ .Os }}-{{ .Arch }}"
+
+  - id: sqlite-driver-archive
+    builds:
+      - sqlite-driver
+    format: binary
+    name_template: "dbc-driver-sqlite-{{ .Os }}-{{ .Arch }}"
+
+checksum:
+  name_template: 'checksums.txt'
+  algorithm: sha256
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'
+      - '^chore:'
+      - '^ci:'
+
+release:
+  github:
+    owner: ntancardoso
+    name: dbc
+  draft: false
+  prerelease: auto
+  name_template: "{{.ProjectName}} v{{.Version}}"
+  header: |
+    ## Database Comparison Tool v{{.Version}}
+
+    A powerful database schema comparison tool with plugin-based driver architecture.
+
+    ### Features
+    - Compare database schemas across snapshots
+    - Support for MySQL, PostgreSQL, SQLite, SQL Server, and Oracle
+    - Flexible snapshot naming (no hardcoded before/after)
+    - Dynamic driver installation
+    - Cross-platform support
+
+    ### Installation
+
+    #### Download Core Binary
+
+    ```bash
+    # Linux/macOS
+    tar xzf dbc_{{.Version}}_linux_amd64.tar.gz
+    chmod +x dbc
+    sudo mv dbc /usr/local/bin/
+
+    # Windows (extract ZIP)
+    # Move dbc.exe to a folder in your PATH
+    ```
+
+    ### Changes
